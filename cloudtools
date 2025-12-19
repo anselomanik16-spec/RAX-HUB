@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dYpSy Cloud - Interactive Neon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon: #00f2ff;
+            --neon-glow: rgba(0, 242, 255, 0.4);
+            --bg: #020617;
+            --card: rgba(15, 23, 42, 0.7);
+            --border: rgba(0, 242, 255, 0.25);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            background-color: var(--bg); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-y: auto; padding: 50px 20px 100px; display: block; -webkit-overflow-scrolling: touch;
+        }
+
+        .bg-fixed { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 50% 0%, #083344 0%, #020617 100%); }
+        .container { max-width: 500px; margin: 0 auto; }
+
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 { font-size: 2.4rem; font-weight: 800; color: var(--neon); text-shadow: 0 0 25px var(--neon-glow); }
+
+        .glass-card {
+            background: var(--card); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border); border-radius: 28px; padding: 35px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); margin-bottom: 30px;
+        }
+
+        .input-box {
+            width: 100%; background: rgba(0, 0, 0, 0.5); border: 1px solid var(--border); border-radius: 14px;
+            padding: 18px; color: #fff; font-family: 'JetBrains Mono'; margin-bottom: 20px; transition: 0.3s;
+        }
+
+        .btn-neon {
+            width: 100%; background: var(--neon); color: #000; border: none; padding: 20px; border-radius: 14px;
+            font-weight: 800; text-transform: uppercase; cursor: pointer; box-shadow: 0 10px 30px var(--neon-glow); transition: 0.3s;
+        }
+
+        /* --- FEATURE INTERACTIVE --- */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .item { 
+            background: var(--card); border: 1px solid var(--border); padding: 22px 15px; border-radius: 22px; 
+            text-align: center; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer;
+        }
+        .item:active { transform: scale(0.9); border-color: var(--neon); box-shadow: 0 0 20px var(--neon-glow); }
+        .item i { color: var(--neon); font-size: 1.4rem; margin-bottom: 12px; }
+        .item h4 { font-size: 0.85rem; color: #fff; margin-bottom: 6px; }
+        .item p { font-size: 0.65rem; color: #94a3b8; line-height: 1.4; }
+
+        .toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: var(--neon); color: #000; padding: 12px 25px; border-radius: 50px;
+            font-weight: 800; font-size: 0.75rem; display: none; z-index: 1000; animation: slideUp 0.3s;
+        }
+        @keyframes slideUp { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
+    </style>
+</head>
+<body>
+    <div class="bg-fixed"></div>
+    <div class="toast" id="cloudToast"></div>
+    <div class="container">
+        <div class="header"><h1>dYpSy Cloud</h1><p style="letter-spacing: 4px; color: #64748b; font-size: 0.7rem;">READY FOR UPLOAD</p></div>
+
+        <div class="glass-card">
+            <input type="text" id="siteName" class="input-box" placeholder="Project Name...">
+            <button class="btn-neon" id="submitBtn">Launch System</button>
+        </div>
+
+        <div class="grid">
+            <div class="item" onclick="triggerFeat('Fast Edge')">
+                <i class="fas fa-bolt"></i><h4>Fast Edge</h4><p>Global CDN deployment in milliseconds.</p>
+            </div>
+            <div class="item" onclick="triggerFeat('Hardened')">
+                <i class="fas fa-shield-halved"></i><h4>Hardened</h4><p>Automatic SSL and DDoS protection.</p>
+            </div>
+            <div class="item" onclick="triggerFeat('Scalable')">
+                <i class="fas fa-arrow-up-right-dots"></i><h4>Scalable</h4><p>Built for infinite traffic growth.</p>
+            </div>
+            <div class="item" onclick="triggerFeat('Assets')">
+                <i class="fas fa-server"></i><h4>Assets</h4><p>Distributed storage for global files.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function triggerFeat(name) {
+            const t = document.getElementById('cloudToast');
+            t.innerText = `System ${name}: Online & Optimized`;
+            t.style.display = 'block';
+            setTimeout(() => t.style.display = 'none', 2000);
+        }
+    </script>
+</body>
+</html>
