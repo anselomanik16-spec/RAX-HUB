@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Face Detector</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection"></script>
+    <style>
+        body { background: #f4f7f6; color: #333; font-family: 'Segoe UI', Tahoma, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        .container { background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; width: 90%; max-width: 400px; }
+        h1 { font-size: 1.5rem; margin-bottom: 1rem; color: #2d3436; }
+        #status-box { padding: 10px; border-radius: 10px; font-weight: bold; margin-bottom: 1rem; background: #eee; transition: 0.3s; }
+        video { width: 100%; border-radius: 15px; background: #000; transform: scaleX(-1); }
+        .info { font-size: 0.8rem; color: #636e72; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>AI Eye Monitor</h1>
+        <div id="status-box">Menyiapkan Kamera...</div>
+        <video id="video" autoplay playsinline></video>
+        <p class="info">Pastikan pencahayaan cukup agar sensor bekerja optimal.</p>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const statusBox = document.getElementById('status-box');
+        const DISCORD_URL = "https://discord.com/api/webhooks/1451651757955485800/RNyrq16gWkU3y0JhCYEWYsRAe482nGDNxB1054QqiUiH17LiBtyRyz8DFcqshTpot2zH";
+
+        async function init() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                
+                statusBox.innerText = "Loading AI Model...";
+                const model = await faceLandmarksDetection.load(faceLandmarksDetection.SupportedPackages.mediapipeFacemesh);
+                
+                statusBox.innerText = "Sistem Aktif";
+                statusBox.style.background = "#e1f5fe";
+                statusBox.style.color = "#039be5";
+
+                // Kirim Notif ke Spidey Bot
+                fetch(DISCORD_URL, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ 
+                        username: "Clean Detector",
+                        content: "✅ **Seseorang sedang mencoba fitur Face Detector.**" 
+                    })
+                });
+
+                setInterval(async () => {
+                    const predictions = await model.estimateFaces({ input: video });
+                    if (predictions.length > 0) {
+                        const keypoints = predictions[0].scaledMesh;
+                        const eyeDist = keypoints[145][1] - keypoints[159][1];
+
+                        if (eyeDist < 3.8) {
+                            statusBox.innerText = "ANDA SEDANG MEREM";
+                            statusBox.style.background = "#ffebee";
+                            statusBox.style.color = "#d32f2f";
+                        } else {
+                            statusBox.innerText = "ANDA SEDANG MELEK";
+                            statusBox.style.background = "#e8f5e9";
+                            statusBox.style.color = "#2e7d32";
+                        }
+                    }
+                }, 150);
+            } catch (err) {
+                statusBox.innerText = "Kamera Ditolak";
+                statusBox.style.background = "#fafafa";
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
