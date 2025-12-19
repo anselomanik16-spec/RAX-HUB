@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Sensor Fix</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@3.11.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection@0.0.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter@3.11.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl@3.11.0"></script>
+
+    <style>
+        body { background: #ffffff; color: #333; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        .box { position: relative; width: 320px; height: 240px; border: 3px solid #eee; border-radius: 15px; overflow: hidden; background: #000; }
+        video, canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: scaleX(-1); }
+        #status { margin-top: 20px; font-size: 22px; font-weight: bold; font-family: monospace; letter-spacing: 1px; }
+        .open { color: #2ecc71; }
+        .closed { color: #e74c3c; }
+        .loading { color: #f39c12; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0.5; } }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <video id="video" autoplay playsinline muted></video>
+        <canvas id="canvas"></canvas>
+    </div>
+    <div id="status" class="loading">MENGHUBUNGKAN SENSOR...</div>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const statusDiv = document.getElementById('status');
+
+        async function init() {
+            try {
+                // 1. Ambil akses kamera
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { width: 320, height: 240 } 
+                });
+                video.srcObject = stream;
+                
+                statusDiv.innerText = "LOADING MODEL AI...";
+                
+                // 2. Load model MediaPipe Facemesh
+                const model = await faceLandmarksDetection.load(
+                    faceLandmarksDetection.SupportedPackages.mediapipeFacemesh
+                );
+                
+                statusDiv.innerText = "eye:siap";
+                statusDiv.classList.remove('loading');
+
+                function detect() {
+                    model.estimateFaces({ input: video }).then(faces => {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                        if (faces.length > 0) {
+                            const points = faces[0].scaledMesh;
+
+                            // 3. Gambar Garis Sensor (Mesh)
+                            ctx.fillStyle = "#00ff00";
+                            points.forEach((p, index) => {
+                                // Hanya gambar titik tertentu biar enteng
+                                if(index % 2 === 0) {
+                                    ctx.beginPath();
+                                    ctx.arc(p[0], p[1], 0.8, 0, 2 * Math.PI);
+                                    ctx.fill();
+                                }
+                            });
+
+                            // 4. Deteksi Mata (Titik Kelopak Mata)
+                            const pUpper = points[159][1]; 
+                            const pLower = points[145][1];
+                            const gap = pLower - pUpper;
+
+                            if (gap < 3.5) {
+                                statusDiv.innerText = "eye:tertutup";
+                                statusDiv.className = "closed";
+                            } else {
+                                statusDiv.innerText = "eye:terbuka";
+                                statusDiv.className = "open";
+                            }
+                        }
+                        requestAnimationFrame(detect);
+                    });
+                }
+                detect();
+            } catch (err) {
+                statusDiv.innerText = "ERROR: KAMERA DITOLAK";
+                statusDiv.style.color = "red";
+                console.error(err);
+            }
+        }
+
+        video.onloadedmetadata = () => {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            init();
+        };
+    </script>
+</body>
+</html>
