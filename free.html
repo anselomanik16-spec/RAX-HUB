@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Face Sensor</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection"></script>
+    <style>
+        body { background: #fdfdfd; color: #333; font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+        .wrapper { position: relative; width: 320px; height: 240px; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        video, canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: scaleX(-1); }
+        .status-container { margin-top: 20px; text-align: center; background: white; padding: 15px 30px; border-radius: 50px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .eye-label { font-weight: bold; font-size: 1.1rem; transition: 0.3s; }
+        .active { color: #2ecc71; text-shadow: 0 0 10px rgba(46, 204, 113, 0.3); }
+        .inactive { color: #bdc3c7; }
+        .blink { color: #e74c3c; }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <video id="video" autoplay playsinline></video>
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <div class="status-container">
+        <span id="eye-open" class="eye-label active">EYE: TERBUKA</span>
+        <span style="margin: 0 10px; color: #ccc;">|</span>
+        <span id="eye-closed" class="eye-label inactive">EYE: TERTUTUP</span>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const labelOpen = document.getElementById('eye-open');
+        const labelClosed = document.getElementById('eye-closed');
+
+        async function setupCamera() {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+            return new Promise((res) => video.onloadedmetadata = () => res(video));
+        }
+
+        async function main() {
+            await setupCamera();
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            const model = await faceLandmarksDetection.load(faceLandmarksDetection.SupportedPackages.mediapipeFacemesh);
+            
+            async function render() {
+                const predictions = await model.estimateFaces({ input: video });
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (predictions.length > 0) {
+                    predictions.forEach(prediction => {
+                        const keypoints = prediction.scaledMesh;
+
+                        // Gambar Garis Sensor Wajah (Face Mesh)
+                        ctx.fillStyle = "#00ff00"; // Warna titik sensor
+                        for (let i = 0; i < keypoints.length; i++) {
+                            const [x, y] = keypoints[i];
+                            ctx.beginPath();
+                            ctx.arc(x, y, 0.7, 0, 2 * Math.PI);
+                            ctx.fill();
+                        }
+
+                        // Logika Deteksi Mata
+                        const upper = keypoints[159][1]; 
+                        const lower = keypoints[145][1];
+                        const diff = lower - upper;
+
+                        if (diff < 3.8) {
+                            labelOpen.className = "eye-label inactive";
+                            labelClosed.className = "eye-label blink";
+                        } else {
+                            labelOpen.className = "eye-label active";
+                            labelClosed.className = "eye-label inactive";
+                        }
+                    });
+                }
+                requestAnimationFrame(render);
+            }
+            render();
+        }
+        main();
+    </script>
+</body>
+</html>
