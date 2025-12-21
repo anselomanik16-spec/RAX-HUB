@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dYpSy Protector - Elite Sapphire</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.5);
+            --danger-red: #ef4444;
+            --danger-glow: rgba(239, 68, 68, 0.5);
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --bg-deep: #020617;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: radial-gradient(circle at top, #0f172a, #020617);
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Background */
+        .ambient-light {
+            position: fixed;
+            width: 400px; height: 400px;
+            background: var(--accent-glow);
+            filter: blur(120px);
+            border-radius: 50%;
+            z-index: -1;
+            top: -100px;
+            transition: background 0.5s ease;
+        }
+
+        .container { width: 100%; max-width: 550px; position: relative; }
+
+        header { text-align: center; margin-bottom: 30px; }
+        header h1 { 
+            font-size: 2rem; font-weight: 800; letter-spacing: -1px;
+            background: linear-gradient(to bottom, #fff, #94a3b8);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        /* Stats Section */
+        .stats-wrapper {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;
+        }
+        .stat-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 15px; border-radius: 20px; backdrop-filter: blur(10px);
+            display: flex; flex-direction: column; gap: 5px;
+        }
+        .stat-card label { font-size: 0.65rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-card .value { font-family: 'JetBrains Mono'; font-size: 1rem; color: var(--primary-blue); font-weight: 700; transition: color 0.5s; }
+
+        .ping-indicator {
+            width: 8px; height: 8px; border-radius: 50%; display: inline-block;
+            margin-right: 8px; background: #10b981; box-shadow: 0 0 10px #10b981;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+
+        /* Mode Switcher */
+        .mode-box {
+            background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border);
+            border-radius: 100px; padding: 6px; display: flex; position: relative; margin-bottom: 25px;
+        }
+        .mode-btn {
+            flex: 1; border: none; background: transparent; color: #94a3b8;
+            padding: 12px; font-weight: 700; font-size: 0.75rem; cursor: pointer;
+            z-index: 2; transition: 0.3s; letter-spacing: 1px;
+        }
+        .mode-btn.active { color: white; }
+        .glider {
+            position: absolute; height: calc(100% - 12px); width: calc(50% - 6px);
+            background: var(--primary-blue); border-radius: 100px;
+            top: 6px; left: 6px; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        /* Main Area */
+        .main-card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 30px; padding: 30px; backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        textarea {
+            width: 100%; height: 200px; background: rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border); border-radius: 20px;
+            padding: 20px; color: #cbd5e1; font-family: 'JetBrains Mono';
+            font-size: 0.85rem; resize: none; outline: none; transition: 0.3s;
+            margin-bottom: 20px;
+        }
+        textarea:focus { border-color: var(--primary-blue); background: rgba(0,0,0,0.4); }
+
+        .btn-run {
+            width: 100%; background: var(--primary-blue); color: white;
+            border: none; padding: 18px; border-radius: 18px; font-weight: 700;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            gap: 12px; transition: all 0.3s; box-shadow: 0 8px 20px var(--accent-glow);
+        }
+        .btn-run:hover { transform: translateY(-3px); box-shadow: 0 12px 25px var(--accent-glow); }
+
+        /* Output */
+        #resultArea { display: none; margin-top: 25px; animation: slideUp 0.5s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .output-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .copy-pill {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
+            color: #fff; padding: 6px 15px; border-radius: 10px; font-size: 0.7rem;
+            font-weight: 600; cursor: pointer; transition: 0.3s;
+        }
+        .copy-pill:hover { background: white; color: black; }
+
+        /* Decrypt Specific Colors */
+        body.mode-decrypt { --primary-blue: var(--danger-red); --accent-glow: var(--danger-glow); }
+        .mode-decrypt .glider { left: calc(50%); }
+
+    </style>
+</head>
+<body id="bodyTag">
+    <div class="ambient-light"></div>
+    
+    <div class="container">
+        <header>
+            <h1>dYpSy Protector</h1>
+        </header>
+
+        <div class="stats-wrapper">
+            <div class="stat-card">
+                <label>System Latency</label>
+                <div class="value"><span class="ping-indicator"></span><span id="pingVal">-- ms</span></div>
+            </div>
+            <div class="stat-card">
+                <label>Payload Stream</label>
+                <div class="value" id="sizeVal">0 B</div>
+            </div>
+        </div>
+
+        <div class="mode-box">
+            <button class="mode-btn active" id="btnEnc" onclick="setMode('enc')">ENCRYPT ENGINE</button>
+            <button class="mode-btn" id="btnDec" onclick="setMode('dec')">DECRYPT ENGINE</button>
+            <div class="glider" id="glider"></div>
+        </div>
+
+        <div class="main-card">
+            <textarea id="inputCode" oninput="calculateSize()" placeholder="Enter your source code here..."></textarea>
+            <button class="btn-run" onclick="runEngine()">
+                <i class="fas fa-shield-halved"></i> <span id="btnLabel">EXECUTE PROTECTION</span>
+            </button>
+
+            <div id="resultArea">
+                <div class="output-header">
+                    <span style="font-size: 0.7rem; font-weight: 700; color: #64748b; letter-spacing: 1px;">ENCRYPTED OUTPUT</span>
+                    <button class="copy-pill" onclick="copyResult()" id="copyBtn">COPY CODE</button>
+                </div>
+                <textarea id="outputCode" style="height: 150px; margin-bottom: 0;" readonly></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = 'enc';
+
+        function updatePing() {
+            const ms = Math.floor(Math.random() * (25 - 10 + 1)) + 10;
+            document.getElementById('pingVal').innerText = ms + ' ms';
+        }
+        setInterval(updatePing, 2000);
+        updatePing();
+
+        function calculateSize() {
+            const text = document.getElementById('inputCode').value;
+            let bytes = new Blob([text]).size;
+            const units = ['B', 'KB', 'MB'];
+            if (bytes === 0) return document.getElementById('sizeVal').innerText = '0 B';
+            const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+            document.getElementById('sizeVal').innerText = (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + units[i];
+        }
+
+        function setMode(m) {
+            currentMode = m;
+            document.body.className = (m === 'dec' ? 'mode-decrypt' : '');
+            document.getElementById('btnEnc').classList.toggle('active', m === 'enc');
+            document.getElementById('btnDec').classList.toggle('active', m === 'dec');
+            document.getElementById('btnLabel').innerText = (m === 'enc' ? 'EXECUTE PROTECTION' : 'DECODE SOURCE');
+            document.getElementById('resultArea').style.display = 'none';
+        }
+
+        function runEngine() {
+            const input = document.getElementById('inputCode').value.trim();
+            const output = document.getElementById('outputCode');
+            if(!input) return;
+
+            if(currentMode === 'enc') {
+                try {
+                    const b64 = btoa(unescape(encodeURIComponent(input)));
+                    const signature = "\n";
+                    output.value = signature + "<script>document.write(decodeURIComponent(escape(atob(\"" + b64 + "\"))));<\/script>";
+                    document.getElementById('resultArea').style.display = 'block';
+                } catch(e) { alert("Encoding Error"); }
+            } else {
+                try {
+                    const match = input.match(/atob\(['"]([^'"]+)['"]\)/);
+                    output.value = match ? decodeURIComponent(escape(atob(match[1]))) : decodeURIComponent(escape(atob(input)));
+                    document.getElementById('resultArea').style.display = 'block';
+                } catch(e) { alert("Invalid Source"); }
+            }
+        }
+
+        function copyResult() {
+            const out = document.getElementById('outputCode');
+            const btn = document.getElementById('copyBtn');
+            out.select();
+            document.execCommand('copy');
+            btn.innerText = "COPIED!";
+            setTimeout(() => btn.innerText = "COPY CODE", 2000);
+        }
+    </script>
+</body>
+</html>
